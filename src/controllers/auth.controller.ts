@@ -1,15 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { UserService } from "../services/user.service";
-// import { AuthService } from "../services/auth.service";
+import UserService from "../services/user.service";
 import { generateToken } from "../utils/jwt.utils";
 
 export default class AuthController {
   private userService: UserService;
-  //   private authService: AuthService;
 
   constructor() {
     this.userService = new UserService();
-    // this.authService = new AuthService();
   }
 
   public async register(req: Request, res: Response, next: NextFunction) {
