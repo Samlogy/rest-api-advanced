@@ -6,6 +6,7 @@ export interface UserDocument extends Document {
   password: string;
   role: string;
   createdAt?: any;
+  comparePasswords?: any;
 }
 
 const userSchema = new Schema<UserDocument>({
