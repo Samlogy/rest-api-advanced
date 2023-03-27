@@ -1,7 +1,7 @@
 import App from "./app";
 import mongoDB from "./src/utils/db";
-// import env from "./src/config/env";
-import { redisClient } from "./src/utils/cache.utils";
+import env from "./src/config";
+// import { redisClient } from "./src/utils/cache.utils";
 
 // Handling uncaught Exception
 process.on("uncaughtException", (err) => {
@@ -10,9 +10,8 @@ process.on("uncaughtException", (err) => {
 });
 
 const app = new App().app;
-const PORT = 3000; //env.PORT;
-const MONGODB_URI =
-  "mongodb+srv://sam:sam@cluster0.fcdvt0a.mongodb.net/?retryWrites=true&w=majority"; // env.MONGODB_URI;
+const PORT = env.PORT;
+const MONGODB_URI = env.MONGODB_URI;
 
 let server: any;
 
@@ -21,7 +20,7 @@ mongoDB(MONGODB_URI)
     server = app.listen(PORT, () =>
       console.log(`Server running on port ${PORT}`)
     );
-    redisClient;
+    // redisClient;
   })
   .catch((err) =>
     console.error(`Failed to connect to database: ${err.message}`)

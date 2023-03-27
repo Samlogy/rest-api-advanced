@@ -10,7 +10,7 @@ interface User {
 const secret = "jwt-secret";
 
 // Generate a JWT token for a user
-export const generateToken = (data: User, expiresIn: string): string => {
+export const generateToken = (data: User, expiresIn = "1h"): string => {
   return jwt.sign({ id: data.id, email: data.email, role: data.role }, secret, {
     expiresIn,
   });

@@ -10,16 +10,6 @@ export const notFoundRoute = (
   next(error);
 };
 
-// export const globalErrorHandler = (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const error = new Error(`Not Found - ${req.originalUrl}`);
-//   res.status(404);
-//   next(error);
-// };
-
 const sendErrorDev = (err: any, res: Response) => {
   res.status(err.statusCode).json({
     status: err.status,
