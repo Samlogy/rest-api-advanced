@@ -1,12 +1,12 @@
 import compression from "compression";
 import express from "express";
-// import corsMiddleware from "./src/middlewares/cors.middleware";
+import corsMiddleware from "./src/middlewares/cors.middleware";
 // import deserializeData from "./src/middlewares/deserializeData";
 // import {
 //   globalErrorHandler,
 //   notFoundRoute,
 // } from "./src/middlewares/errror.middlewares";
-// import security from "./src/middlewares/security.middlewares";
+import security from "./src/middlewares/security.middleware";
 // import authRoutes from "./src/routes/auth.route";
 // import usersRoutes from "./src/routes/users.route";
 // import { successHandler, errorHandler } from "./src/utils/logs.utils";
@@ -19,16 +19,16 @@ export default class App {
     this.app = express();
 
     // set a set of attack preventions --> secure some well know web vulnerabilities OWASP
-    // security(this.app);
+    security(this.app);
 
     // // CORS configuration
-    // this.app.use(corsMiddleware);
+    this.app.use(corsMiddleware);
 
     // // Logging middleware to track requests
     // this.app.use(successHandler);
     // this.app.use(errorHandler);
 
-    // this.app.use(compression());
+    this.app.use(compression());
 
     // // Add the deserialization middleware to the middleware chain
     // this.app.use(deserializeData);
