@@ -8,7 +8,6 @@ import {
 } from "./src/middlewares/error.middleware";
 import security from "./src/middlewares/security.middleware";
 import authRoutes from "./src/routes/auth.route";
-// import usersRoutes from "./src/routes/users.route";
 // import { successHandler, errorHandler } from "./src/utils/logs.utils";
 // import checkApiVersion from "./src/middlewares/checkApiVersion.middleware";
 

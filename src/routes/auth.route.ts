@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { isAthenticated, isValidRole } from "../middlewares/auth.middlewares";
 import AuthController from "../controllers/auth.controller";
 
 export default class AuthRoutes {
@@ -19,6 +20,8 @@ export default class AuthRoutes {
     );
     this.router.post(
       "/login",
+      isAthenticated,
+      isValidRole("admin"),
       this.authController.login.bind(this.authController)
     );
     this.router.get(

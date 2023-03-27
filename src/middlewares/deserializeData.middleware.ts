@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { NextFunction, Request, Response } from "express";
 import { decryptData } from "../utils/encryption.utils";
 
 export default function deserializeData(
@@ -10,11 +10,10 @@ export default function deserializeData(
     req.method !== "GET" &&
     req.body &&
     Object.keys(req.body).length === 1 &&
-    typeof req.body?.data !== "string"
+    typeof req.body?.data === "string"
   ) {
     try {
-      // decrypt
-      req.body = decryptData(req.body);
+      req.body = decryptData(req.body.data);
       return next();
     } catch (err) {
       return res
