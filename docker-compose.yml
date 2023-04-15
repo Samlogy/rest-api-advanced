@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    container_name: api-app
+    build:
+      context: ./
+    depends_on:
+      - cache
+    ports:
+      - 3001:3001
+    links:
+      - cache
+
+  cache:
+    image: redis:6.2-alpine
+    container_name: api-cache
+    ports:
+      - 6380:6379
+    command: redis-server --save 20 1 --loglevel warning --requirepass password
+    volumes:
+      - cache_volume:/data
+    restart: always
+
+volumes:
+  cache_volume:
