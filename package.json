@@ -33,7 +33,7 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "dev": "export NODE_ENV=dev && nodemon index.ts",
+    "dev": "export NODE_ENV=dev && nodemon src/index.ts",
     "build": "tsc",
     "start": "export NODE_ENV=prod && node build/index.js",
     "build:start": "tsc && export NODE_ENV=prod && node build/index.js"

@@ -1,7 +1,7 @@
 import App from "./app";
-import mongoDB from "./src/utils/db";
-import env from "./src/config";
-// import { redisClient } from "./src/utils/cache.utils";
+import mongoDB from "./utils/db";
+import env from "./config";
+// import { redisClient } from "./utils/cache.utils";
 
 // Handling uncaught Exception
 process.on("uncaughtException", (err) => {

@@ -1,15 +1,32 @@
 import compression from "compression";
 import express from "express";
-import corsMiddleware from "./src/middlewares/cors.middleware";
-import deserializeData from "./src/middlewares/deserializeData.middleware";
+import corsMiddleware from "./middlewares/cors.middleware";
+import deserializeData from "./middlewares/deserializeData.middleware";
 import {
   globalErrorHandler,
   notFoundRoute,
-} from "./src/middlewares/error.middleware";
-import security from "./src/middlewares/security.middleware";
-import authRoutes from "./src/routes/auth.route";
-// import { successHandler, errorHandler } from "./src/utils/logs.utils";
-// import checkApiVersion from "./src/middlewares/checkApiVersion.middleware";
+} from "./middlewares/error.middleware";
+import security from "./middlewares/security.middleware";
+import authRoutes from "./routes/auth.route";
+// import { successHandler, errorHandler } from "./utils/logs.utils";
+// import checkApiVersion from "./middlewares/checkApiVersion.middleware";
+import cors from "cors";
+
+const allowedOrigins = ["http://example.com", "http://localhost:3000"];
+
+// Define CORS options
+const corsOptions = {
+  origin: (
+    origin: string,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
 export default class App {
   public app: express.Application;
@@ -21,7 +38,7 @@ export default class App {
     security(this.app);
 
     // // CORS configuration
-    // this.app.use(corsMiddleware);
+    this.app.use(corsMiddleware);
 
     // // Logging middleware to track requests
     // this.app.use(successHandler);
