@@ -1,37 +1,47 @@
-import App from "./app";
-import mongoDB from "./utils/db";
-import env from "./config";
-// import { redisClient } from "./utils/cache.utils";
+import { signals } from './constants/signals'
+import App from './app'
+import env from './config'
+import { mongoDB } from './utils/db'
+import gracefulShutdown from './utils/gracefulShutdown'
+import { logger } from './utils/logger'
+// import { redisClient } from './utils/cache.utils'
 
 // Handling uncaught Exception
-process.on("uncaughtException", (err) => {
-  console.log(`Error: ${err.message}`);
-  console.log(`shutting down the server for handling uncaught exception`);
-});
+// process.on('uncaughtException', (err) => {
+//   logger.info(`Error: ${err.message}`)
+//   logger.info(`shutting down the server for handling uncaught exception`)
+// })
 
-const app = new App().app;
-const PORT = env.PORT;
-const MONGODB_URI = env.MONGODB_URI;
+const app = new App().app
+const PORT = env.PORT
+const MONGODB_URI = env.MONGODB_URI
 
-let server: any;
+let server: any
 
 mongoDB(MONGODB_URI)
   .then(() => {
-    server = app.listen(PORT, () =>
-      console.log(`Server running on port ${PORT}`)
-    );
-    // redisClient;
+    // const server = app.listen(PORT, () => {
+    //   logger.info(`App is listening`)
+    // for (let i = 0; i < signals.length; i++) {
+    //   process.on(signals[i], () =>
+    //     gracefulShutdown({
+    //       signal: signals[i],
+    //       server
+    //     })
+    //   )
+    // }
+    // redisClient
+    // })
+    // return server
   })
-  .catch((err) =>
-    console.error(`Failed to connect to database: ${err.message}`)
-  );
+  .catch((err) => console.error(`Failed to connect to database: ${err.message}`))
 
 // unhandled promise rejection
-process.on("unhandledRejection", (err: Error) => {
-  console.log(`Shutting down the server for ${err.message}`);
-  console.log(`shutting down the server for unhandle promise rejection`);
+// process.on('unhandledRejection', (err: Error) => {
+//   logger.info(`Shutting down the server for ${err.message}`)
+//   logger.info(`shutting down the server for unhandle promise rejection`)
 
-  server.close(() => {
-    process.exit(1);
-  });
-});
+//   server.close(() => {
+//     process.exit(1)
+//   })
+// })
