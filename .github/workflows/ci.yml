@@ -1,0 +1,26 @@
+name: API-CI
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '18.x'
+      - name: Run Yarn
+        run: yarn
+      - name: Check linting
+        run: yarn lint
+      - name: Check format
+        run: yarn format
+      - name: RUN Tests
+        run: yarn test
