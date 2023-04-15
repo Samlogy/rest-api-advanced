@@ -1,14 +1,17 @@
 import mongoose from 'mongoose'
-// import { devConfig } from '../../config'
+import { logger } from './logger'
 
-export default async function mongoDB(uri: string) {
+export async function mongoDB(uri: string) {
   try {
     mongoose.set('strictQuery', false)
     await mongoose.connect(uri)
-
-    console.log('DB connected')
+    logger.info('Connected to database')
   } catch (err) {
-    console.log('Could not connect to db: ', err)
+    logger.error(err)
     process.exit(1)
   }
+}
+
+export function disconnectMongoDB() {
+  return mongoose.connection.close()
 }
