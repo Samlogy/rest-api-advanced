@@ -1,7 +1,7 @@
 import mongoose from 'mongoose'
 // import { devConfig } from '../../config'
 
-export default async function mongoDB(uri:string) {
+export default async function mongoDB(uri: string) {
   try {
     mongoose.set('strictQuery', false)
     await mongoose.connect(uri)
