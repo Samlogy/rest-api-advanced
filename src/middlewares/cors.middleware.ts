@@ -17,7 +17,7 @@ export default function corsMiddleware(app: Application) {
         return callback(null, true)
       },
       methods: allowedMethods,
-      credentials: true,
+      credentials: true, // enable HTTP cookies
       optionsSuccessStatus: 200
     })
   )

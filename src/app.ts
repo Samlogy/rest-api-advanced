@@ -1,5 +1,5 @@
 import compression from 'compression'
-import express from 'express'
+import express, { Request, Response } from 'express'
 import corsMiddleware from './middlewares/cors.middleware'
 import deserializeData from './middlewares/deserializeData.middleware'
 import { globalErrorHandler, notFoundRoute } from './middlewares/error.middleware'
@@ -13,6 +13,10 @@ export default class App {
 
   constructor() {
     this.app = express()
+
+    this.app.use('/health-check', (req: Request, res: Response): void => {
+      res.json({ message: 'health-check' })
+    })
 
     // set a set of attack preventions --> secure some well know web vulnerabilities OWASP
     security(this.app)

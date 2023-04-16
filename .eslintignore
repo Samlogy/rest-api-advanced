@@ -3,3 +3,7 @@ build
 lint-staged.config.js
 package.json
 yarn.lock
+__tests__
+coverage
+.github
+.husky

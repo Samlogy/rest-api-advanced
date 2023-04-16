@@ -48,7 +48,7 @@ export function checkSignals(server: any, signals: ISignals) {
 
 export async function launchApp() {
   try {
-    await mongoDB(MONGODB_URI)
+    // await mongoDB(MONGODB_URI)
     const server = createServer(PORT, RESTART_DELAY.server)
     checkSignals(server, signals)
     // redisClient
