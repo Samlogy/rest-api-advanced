@@ -4,37 +4,60 @@ import env from './config'
 import { mongoDB } from './utils/db'
 import gracefulShutdown from './utils/gracefulShutdown'
 import { logger } from './utils/logger'
-// import { redisClient } from './utils/cache.utils'
+import { redisClient } from './utils/cache.utils'
 
 // Handling uncaught Exception
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', (err: Error) => {
   logger.info(`Error: ${err.message}`)
   logger.info(`shutting down the server for handling uncaught exception`)
 })
 
+type ISignals = readonly ['SIGINT', 'SIGTERM', 'SIGHUP']
+
 const app = new App().app
 const PORT = env.PORT
 const MONGODB_URI = env.MONGODB_URI
+const RESTART_DELAY = {
+  cache: 1000,
+  server: 3000,
+  db: 5000
+}
 
 let server: any
 
-mongoDB(MONGODB_URI)
-  .then(() => {
-    const server = app.listen(PORT, () => logger.info(`App is listening`))
+export function createServer(port: string, delay: number) {
+  return app
+    .listen(port, () => logger.info(`Server started on port ${port}`))
+    .on('error', (err: Error) => {
+      logger.error(`Error starting server on port ${port}: ${err.message}`)
+      setTimeout(() => createServer(port, delay), delay)
+    })
+}
 
-    for (let i = 0; i < signals.length; i++) {
-      process.on(signals[i], () =>
-        gracefulShutdown({
-          signal: signals[i],
-          server
-        })
-      )
-    }
+export function checkSignals(server: any, signals: ISignals) {
+  for (let i = 0; i < signals.length; i++) {
+    process.on(signals[i], () =>
+      gracefulShutdown({
+        signal: signals[i],
+        server
+      })
+    )
+  }
+}
+
+export async function launchApp() {
+  try {
+    await mongoDB(MONGODB_URI)
+    const server = createServer(PORT, RESTART_DELAY.server)
+    checkSignals(server, signals)
     // redisClient
-    // })
-    return server
-  })
-  .catch((err) => console.error(`Failed to connect to database: ${err.message}`))
+  } catch (err: any) {
+    logger.error(`Failed to connect to database: ${err.message}`)
+    setTimeout(() => createServer(PORT, RESTART_DELAY.server), RESTART_DELAY.db)
+  }
+}
+
+launchApp()
 
 // unhandled promise rejection
 process.on('unhandledRejection', (err: Error) => {
@@ -45,3 +68,9 @@ process.on('unhandledRejection', (err: Error) => {
     process.exit(1)
   })
 })
+
+// launch APP:
+// lanuch mongoDB server (Atlas)
+// lanuch our app server (Express)
+// check for gracefulShutdown (stoping server --> signals)
+// lanuch our cache (Redis)
