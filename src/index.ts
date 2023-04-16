@@ -4,7 +4,7 @@ import env from './config'
 import { mongoDB } from './utils/db'
 import gracefulShutdown from './utils/gracefulShutdown'
 import { logger } from './utils/logger'
-import { redisClient } from './utils/cache.utils'
+import Cache from './utils/cache.utils'
 
 // Handling uncaught Exception
 process.on('uncaughtException', (err: Error) => {
@@ -14,6 +14,7 @@ process.on('uncaughtException', (err: Error) => {
 
 type ISignals = readonly ['SIGINT', 'SIGTERM', 'SIGHUP']
 
+const redisClient = new Cache()
 const app = new App().app
 const PORT = env.PORT
 const MONGODB_URI = env.MONGODB_URI
@@ -47,10 +48,10 @@ export function checkSignals(server: any, signals: ISignals) {
 
 export async function launchApp() {
   try {
-    await mongoDB(MONGODB_URI)
+    // await mongoDB(MONGODB_URI)
     const server = createServer(PORT, RESTART_DELAY.server)
     checkSignals(server, signals)
-    // redisClient
+    redisClient
   } catch (err: any) {
     logger.error(`Failed to connect to database: ${err.message}`)
     setTimeout(() => createServer(PORT, RESTART_DELAY.server), RESTART_DELAY.db)

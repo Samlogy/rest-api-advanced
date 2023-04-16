@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express'
-import { redisClient } from '../utils/cache.utils'
+import Cache from '../utils/cache.utils'
+import { logger } from '../utils/logger'
 
 export const checkCache = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { key } = req.params
+    const redisClient = new Cache()
     const data = await redisClient.get(key)
     if (data !== null) return res.send(data)
     return next()
   } catch (err) {
-    console.error(err)
+    logger.error('cache middleware: ', err)
     return next()
   }
 }
