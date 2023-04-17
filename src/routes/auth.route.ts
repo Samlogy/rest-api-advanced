@@ -21,6 +21,6 @@ export default class AuthRoutes {
       // isValidRole("admin"),
       this.authController.login.bind(this.authController)
     )
-    this.router.get('/logout', isAthenticated, this.authController.logout.bind(this.authController))
+    this.router.get('/logout', this.authController.logout.bind(this.authController))
   }
 }

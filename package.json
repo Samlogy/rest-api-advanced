@@ -44,6 +44,7 @@
     "babel-core": "^6.26.3",
     "babel-jest": "^29.5.0",
     "babel-preset-env": "^1.7.0",
+    "cross-env": "^7.0.3",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.3",
@@ -62,8 +63,8 @@
     "build:start": "tsc && export NODE_ENV=prod && node build/index.js",
     "lint": "eslint src/**/*.ts",
     "format": "eslint src/**/*.ts --fix",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test": "NODE_ENV=test jest",
+    "test:coverage": "NODE_ENV=test jest --coverage",
+    "test:watch": "NODE_ENV=test jest --watch "
   }
 }
