@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
-import Cache from '../utils/cache.utils'
-import { logger } from '../utils/logger'
+import { NextFunction, Request, Response } from 'express'
+import Cache from '../utils/cache'
+import logger from '../utils/logger'
 
 export const checkCache = async (req: Request, res: Response, next: NextFunction) => {
   try {

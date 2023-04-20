@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { decryptData } from '../utils/encryption.utils'
+import { decryptData } from '../utils/encryption'
 
 export default function deserializeData(req: Request, res: Response, next: NextFunction) {
   if (req.method !== 'GET' && req.body && Object.keys(req.body).length === 1 && typeof req.body?.data === 'string') {

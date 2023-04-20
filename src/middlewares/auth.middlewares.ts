@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { decodeToken } from '../utils/jwt.utils'
+import { decodeToken } from '../utils/jwt'
 
 // Middleware function that verifies a JWT token and adds the decoded user to the request object
 export const isAthenticated = (req: Request, res: Response, next: NextFunction) => {

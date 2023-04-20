@@ -1,6 +1,6 @@
-import { Request, Response, NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 import UserService from '../services/user.service'
-import { generateToken } from '../utils/jwt.utils'
+import { generateToken } from '../utils/jwt'
 
 export default class AuthController {
   private userService: UserService
@@ -27,7 +27,7 @@ export default class AuthController {
 
       return res.status(201).json({ success: true, data: { user, token } })
     } catch (err) {
-      return res.status(500).json({ success: false, message: 'an ocurred while signUp' })
+      return res.status(500).json({ success: false, message: 'an ocurred while sign Up' })
     }
   }
   public async login(req: Request, res: Response, next: NextFunction) {
@@ -57,7 +57,7 @@ export default class AuthController {
       // delete token
       res.status(200).json({ success: true, data: {} })
     } catch (err) {
-      res.status(500).json({ success: false, message: 'an ocurred while signIn' })
+      res.status(500).json({ success: false, message: 'an ocurred while sign Out' })
     }
   }
 }

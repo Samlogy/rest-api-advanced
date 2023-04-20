@@ -1,5 +1,5 @@
 import Redis from 'ioredis'
-import { logger } from './logger'
+import logger from './logger'
 
 export default class Cache {
   private redisClient: Redis
@@ -9,6 +9,10 @@ export default class Cache {
       host: 'localhost',
       port: 6379
     })
+  }
+
+  close() {
+    this.redisClient.disconnect()
   }
 
   async get(key: string): Promise<string | null> {
