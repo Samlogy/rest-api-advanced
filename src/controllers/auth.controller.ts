@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express'
 import UserService from '../services/user.service'
-import { generateToken } from '../utils/jwt.utils'
+import { generateToken } from '../utils/jwt'
 
 export default class AuthController {
   private userService: UserService

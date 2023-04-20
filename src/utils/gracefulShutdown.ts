@@ -1,7 +1,7 @@
 import { signals } from 'constants/signals'
-import Cache from './cache.utils'
+import Cache from './cache'
 import { disconnectMongoDB } from './db'
-import { logger } from './logger'
+import logger from './logger'
 
 export default async function gracefulShutdown({ signal, server }: { signal: (typeof signals)[number]; server: any }) {
   const redisClient = new Cache()

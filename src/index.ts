@@ -1,10 +1,9 @@
-import { signals } from './constants/signals'
 import App from './app'
 import env from './config'
-import { mongoDB } from './utils/db'
+import { signals } from './constants/signals'
 import gracefulShutdown from './utils/gracefulShutdown'
-import { logger } from './utils/logger'
-// import Cache from './utils/cache.utils'
+import logger from './utils/logger'
+// import Cache from './utils/cache'
 
 // Handling uncaught Exception
 process.on('uncaughtException', (err: Error) => {

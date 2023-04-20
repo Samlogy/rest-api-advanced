@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import App from '../src/app'
 import UserService from '../src/services/user.service'
-import { generateToken } from '../src/utils/jwt.utils'
+import { generateToken } from '../src/utils/jwt'
 
 const app = new App().app
 
