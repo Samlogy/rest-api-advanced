@@ -11,6 +11,10 @@ export default class Cache {
     })
   }
 
+  close() {
+    this.redisClient.disconnect()
+  }
+
   async get(key: string): Promise<string | null> {
     try {
       const cache = await this.redisClient.get(key)
