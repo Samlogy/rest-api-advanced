@@ -3,6 +3,7 @@ import env from './config'
 import { signals } from './constants/signals'
 import gracefulShutdown from './utils/gracefulShutdown'
 import logger from './utils/logger'
+import { startMetricsServer } from './utils/metrics'
 // import Cache from './utils/cache'
 
 // Handling uncaught Exception
@@ -51,6 +52,7 @@ export async function launchApp() {
     const server = createServer(PORT, RESTART_DELAY.server)
     checkSignals(server, signals)
     // redisClient
+    startMetricsServer()
   } catch (err: any) {
     logger.error(`Failed to connect to database: ${err.message}`)
     setTimeout(() => createServer(PORT, RESTART_DELAY.server), RESTART_DELAY.db)
