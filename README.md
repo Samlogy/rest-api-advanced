@@ -122,4 +122,15 @@ github actions workflow triggers on push / pull on master branch only.
 
 push integrated code to production (deployment)
 
+## Graceful
+
+Graceful shutdown is function that is trigger while a a signal is receive by the server to shut it dow.
+this function make sure that all processes, and sub-processes that are running, will stop, after finish their current running tasks.
+
+close:
+
+- cache
+- server
+- mongodb
+
 ## Monitoring
