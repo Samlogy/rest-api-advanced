@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { Request, Response } from 'express'
 import UserService from '../services/user.service'
 import { generateToken } from '../utils/jwt'
 
@@ -9,14 +9,12 @@ export default class AuthController {
     this.userService = new UserService()
   }
 
-  public async register(req: Request, res: Response, next: NextFunction) {
+  public async register(req: Request, res: Response) {
     try {
       const { email, password, role } = req.body
       const existingUser = await this.userService.findOne({ email })
 
-      if (existingUser) {
-        return res.status(409).json({ success: false, message: 'Email already in use' })
-      }
+      if (existingUser) return res.status(409).json({ success: false, message: 'Email already in use' })
 
       const user = await this.userService.create({ email, password })
       const token = generateToken({
@@ -30,7 +28,7 @@ export default class AuthController {
       return res.status(500).json({ success: false, message: 'an ocurred while sign Up' })
     }
   }
-  public async login(req: Request, res: Response, next: NextFunction) {
+  public async login(req: Request, res: Response) {
     try {
       const { email, password } = req.body
       const userExist = await this.userService.findOne({ email })
@@ -52,7 +50,7 @@ export default class AuthController {
       return res.status(500).json({ success: false, message: 'an ocurred while signIn' })
     }
   }
-  public async logout(req: Request, res: Response, next: NextFunction) {
+  public async logout(req: Request, res: Response) {
     try {
       // delete token
       res.status(200).json({ success: true, data: {} })

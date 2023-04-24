@@ -1,6 +1,7 @@
 import App from './app'
 import env from './config'
 import { signals } from './constants/signals'
+import { mongoDB } from './utils/db'
 import gracefulShutdown from './utils/gracefulShutdown'
 import logger from './utils/logger'
 import { startMetricsServer } from './utils/metrics'
@@ -48,7 +49,7 @@ export function checkSignals(server: any, signals: ISignals) {
 
 export async function launchApp() {
   try {
-    // await mongoDB(MONGODB_URI)
+    await mongoDB(MONGODB_URI)
     const server = createServer(PORT, RESTART_DELAY.server)
     checkSignals(server, signals)
     // redisClient
