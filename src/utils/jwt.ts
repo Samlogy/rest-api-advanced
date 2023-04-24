@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import env from '../config'
 
 interface User {
   id: string
@@ -6,7 +7,7 @@ interface User {
   role: string
 }
 
-const secret = 'jwt-secret'
+const secret = env.JWT_SECRET || 'jwt-secret'
 
 // Generate a JWT token for a user
 export const generateToken = (data: User, expiresIn = '1h'): string => {

@@ -42,7 +42,7 @@ export default class AuthController {
       if (!isMatch) return res.status(401).json({ success: false, message: 'Invalid credentials' })
 
       const token = generateToken({
-        id: userExist.id,
+        id: userExist._id,
         email: userExist.email,
         role: userExist.role
       })
